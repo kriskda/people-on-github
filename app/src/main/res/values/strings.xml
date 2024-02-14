@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">People on Github</string>
+
+    <string name="user_list_avatar_content_description">User avatar</string>
+
+    <string name="info_loading">Loading…</string>
+    <string name="info_failure">Content could not be loaded</string>
+</resources>

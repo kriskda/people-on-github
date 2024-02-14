@@ -1,2 +1,2 @@
-# people-on-github
+# People on github
 Recruitment task
