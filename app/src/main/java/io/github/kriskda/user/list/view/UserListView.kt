@@ -4,19 +4,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,47 +23,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.github.kriskda.R
-import io.github.kriskda.common.animation.ScreenTransitionAnimation
-import io.github.kriskda.user.destinations.UserDetailsScreenDestination
-import io.github.kriskda.user.list.UserListViewModel
+import io.github.kriskda.common.preview.UserItemListProvider
+import io.github.kriskda.items
 import io.github.kriskda.user.list.model.UserItem
-
-@RootNavGraph(start = true)
-@Destination(style = ScreenTransitionAnimation::class)
-@Composable
-fun UserListScreen(
-    navigator: DestinationsNavigator,
-    viewModel: UserListViewModel = hiltViewModel()
-) {
-
-    val users by viewModel.usersStateFlow.collectAsStateWithLifecycle()
-
-    UserListScreen(
-        users = users,
-        onItemClick = { navigator.navigate(UserDetailsScreenDestination(it)) }
-    )
-}
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
-private fun UserListScreen(
-    users: List<UserItem>,
+fun UserListView(
+    listState: LazyListState,
+    users: LazyPagingItems<UserItem>,
     onItemClick: (String) -> Unit
 ) {
-    val listState = rememberLazyListState()
-
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         state = listState,
     ) {
@@ -86,7 +65,7 @@ private fun UserItemView(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onItemClick(user.id) },
+            .clickable { onItemClick(user.userName) },
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -112,28 +91,29 @@ private fun UserItemView(
                 contentDescription = stringResource(R.string.user_list_avatar_content_description),
             )
         }
-        Text(
-            text = user.userName,
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold
-        )
+        Column {
+            Text(
+                text = user.userName,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = stringResource(R.string.user_list_user_id, user.id.toString()),
+                style = MaterialTheme.typography.labelMedium,
+            )
+        }
+
     }
 }
 
 @Preview
 @Composable
-private fun UserListScreenPreview() {
-    UserListScreen(
-        users = testUsers(),
-        onItemClick = {}
+private fun UserListScreenPreview(
+    @PreviewParameter(UserItemListProvider::class) users: PagingData<UserItem>
+) {
+    UserListView(
+        listState = LazyListState(),
+        users = flowOf(users).collectAsLazyPagingItems(),
+        onItemClick = {},
     )
 }
-
-private fun testUsers() =
-    (1..10).map {
-        UserItem(
-            id = it.toString(),
-            userName = "User $it",
-            avatarUrl = "https://avatars.githubusercontent.com/u/2589087?s=400&u=b921ee47bbc3ef5e1b03e45877d337ea16bc7590&v=4"
-        )
-    }

@@ -1,13 +1,21 @@
+apply(from = "../android.common.gradle")
+
 plugins {
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+android {
+    namespace = "io.github.domain"
 }
 
-dependencies{
-    implementation("com.google.dagger:hilt-core:2.50")
+dependencies {
+    implementation(libs.hiltDaggerCore)
+
+    implementation(libs.pagingRuntime)
+    implementation(libs.pagingCompose)
+
+    testImplementation(libs.testJunit)
+    testImplementation(libs.testMockitoKotlin)
+    testImplementation(libs.testCoroutines)
 }

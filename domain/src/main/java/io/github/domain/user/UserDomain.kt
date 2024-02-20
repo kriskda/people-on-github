@@ -1,7 +1,7 @@
 package io.github.domain.user
 
-data class User(
-    val id: String,
+data class UserDomain(
+    val id: Int,
     val userName: String,
     val avatarUrl: String,
 )

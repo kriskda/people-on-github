@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">People on Github</string>
-
     <string name="user_list_avatar_content_description">User avatar</string>
-
+    <string name="user_list_load_again">Load again</string>
+    <string name="user_list_user_id">User id %1$s</string>
+    <string name="user_list_search_user">Search user</string>
     <string name="info_loading">Loading…</string>
     <string name="info_failure">Content could not be loaded</string>
+    <string name="user_details_public_repos">Public repositories: %1$s</string>
+    <string name="user_details_following">Following: %1$s</string>
+    <string name="user_details_followers">Followers: %1$s</string>
 </resources>

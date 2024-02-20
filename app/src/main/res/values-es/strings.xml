@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Gente en Github</string>
+    <string name="user_list_avatar_content_description">Avatar del usuario</string>
+    <string name="user_list_load_again">Cargar de nuevo</string>
+    <string name="user_list_user_id">ID de usuario %1$s</string>
+    <string name="user_list_search_user">Buscar usuario</string>
+    <string name="info_loading">Cargando…</string>
+    <string name="info_failure">No se pudo cargar el contenido</string>
+    <string name="user_details_public_repos">Repositorios públicos: %1$s</string>
+    <string name="user_details_following">Siguiendo: %1$s</string>
+    <string name="user_details_followers">Seguidores: %1$s</string>
+</resources>

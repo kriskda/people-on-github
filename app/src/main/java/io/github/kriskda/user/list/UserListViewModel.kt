@@ -2,32 +2,21 @@ package io.github.kriskda.user.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
+import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.domain.GetUsers
-import io.github.kriskda.user.list.model.UserItem
-import io.github.kriskda.user.toUserList
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
+import io.github.domain.usecase.GetUsersUseCase
+import io.github.kriskda.user.toUserItem
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
 class UserListViewModel @Inject constructor(
-    getUsers: GetUsers
+    getUsersUseCase: GetUsersUseCase
 ) : ViewModel() {
 
-    val usersStateFlow: StateFlow<List<UserItem>> = flow<List<UserItem>> {
-        runCatching {
-            getUsers()
-        }.onSuccess {
-            emit(it.toUserList())
-        }.onFailure {
-            emit(emptyList())
-        }
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        emptyList()
-    )
+    val usersPagingFlow = getUsersUseCase()
+        .map { pagingData ->
+            pagingData.map { it.toUserItem() }
+        }.cachedIn(viewModelScope)
 }
