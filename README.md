@@ -15,9 +15,9 @@ The app is structured into several Gradle modules, each serving a distinct purpo
 - `app`: This module forms the presentation layer of the application, consisting of Compose screens and ViewModels that orchestrate the user interface.
 - `domain`: While it could be omitted in this simplified example, the domain module is typically where the business logic resides, beginning with the use cases. It's designed to encapsulate the core operations and rules of the application.
 - `data`: This module is dedicated to data provision for the app and is divided into three sub-modules:
- - `network`: Handles external data feeds,
- - `database`: Manages a local database for caching purposes,
- - `repository`: Combines data from both the network and database, then emits refined domain-specific data.
+  - `network`: Handles external data feeds,
+  - `database`: Manages a local database for caching purposes,
+  - `repository`: Combines data from both the network and database, then emits refined domain-specific data.
 This modular structure enhances maintainability, scalability, and clarity by clearly separating concerns within the application.  
 
 ## Unit tests
