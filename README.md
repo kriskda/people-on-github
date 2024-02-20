@@ -1,6 +1,12 @@
 # People on github
 "People on GitHub" is an Android app with two main features: a user list for easy searching of GitHub profiles and a user detail screen for in-depth information.
 
+
+
+https://github.com/kriskda/people-on-github/assets/2589087/ce219553-8c47-4ff0-906b-a6daa230e8be
+
+
+
 ## Authentication
 The GitHub API necessitates an authentication token. Currently, from the user interface perspective, there isn't an option to input this token directly. Instead, the token is pre-configured within the GitHubFeedService.
 
