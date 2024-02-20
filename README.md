@@ -8,7 +8,7 @@ https://github.com/kriskda/people-on-github/assets/2589087/ce219553-8c47-4ff0-90
 
 
 ## Authentication
-The GitHub API necessitates an authentication token. Currently, from the user interface perspective, there isn't an option to input this token directly. Instead, the token is pre-configured within the GitHubFeedService.
+The GitHub API necessitates an authentication token. Currently, from the user interface perspective, there isn't an option to input this token directly. Instead, the token is pre-configured within the `GitHubFeedService`.
 
 ## Components
 The app is structured into several Gradle modules, each serving a distinct purpose:
